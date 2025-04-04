@@ -1,0 +1,38 @@
+package com.gestionviajes.msgestionviajes.model;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "Historiales_Medicos")
+public class HistorialMedico {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_historial;
+
+    @OneToOne
+    @JoinColumn(name = "id_cita", nullable = false)
+    private Cita cita;
+
+    @ManyToOne
+    @JoinColumn(name = "id_mascota", nullable = false)
+    private Mascota mascota;
+
+    private String diagnóstico;
+    private String tratamiento;
+    private String medicación;
+    private String notas;
+
+    @Temporal(TemporalType.DATE)
+    private Date fecha_creación = new Date();
+}
+
