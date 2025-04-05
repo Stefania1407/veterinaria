@@ -29,9 +29,7 @@ public class HistorialMedico {
     private String tratamiento;
     private String medicación;
     private String notas;
-
-    @Temporal(TemporalType.DATE)
-    private Date fecha_creación = new Date();
+    private Date fecha_creación;
 
 
 }

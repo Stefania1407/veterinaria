@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
 @Entity
-@Table(name = "Cita")
+@Table(name = "cita")
 @Getter
 @Setter
 public class Cita {
@@ -24,9 +25,7 @@ public class Cita {
     @ManyToOne
     @JoinColumn(name = "id_veterinario")
     private Veterinario veterinario;
-
-    @Temporal(TemporalType.DATE)
-    private Date fecha_cita;
+    private LocalDateTime fechaCita;
 
     private String motivo;
     private String estado = "Pendiente";

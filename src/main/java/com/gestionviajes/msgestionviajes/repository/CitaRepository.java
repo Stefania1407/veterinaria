@@ -5,6 +5,7 @@ import com.gestionviajes.msgestionviajes.model.Mascota;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -13,5 +14,5 @@ import java.util.Optional;
 public interface CitaRepository extends JpaRepository<Cita, Integer> {
     List<Cita> findByEstado(String estado);
 
-    Optional<Cita> findByFechaCitaAndMascota(Date fecha_cita, Mascota mascota);
+    Optional<Cita> findByFechaCitaAndMascota(LocalDateTime fechaCita, Mascota mascota);
 }

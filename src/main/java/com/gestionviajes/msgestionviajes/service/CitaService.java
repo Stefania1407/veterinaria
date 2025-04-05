@@ -6,7 +6,6 @@ import com.gestionviajes.msgestionviajes.model.Cita;
 import com.gestionviajes.msgestionviajes.model.Mascota;
 import com.gestionviajes.msgestionviajes.repository.CitaRepository;
 import com.gestionviajes.msgestionviajes.repository.MascotaRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +33,7 @@ public class CitaService {
                 .orElseThrow(() -> new SaveCitaNotFoundException("Mascota no encontrada" + idMascota));
 
         Optional<Cita> citaExistente = citaRepository.findByFechaCitaAndMascota(
-                citaDto.getFecha_cita(), mascota
+                citaDto.getFechaCita(), mascota
         );
 
         if (citaExistente.isPresent()) {
@@ -42,7 +41,7 @@ public class CitaService {
         }
 
         Cita cita = new Cita();
-        cita.setFecha_cita(citaDto.getFecha_cita());
+        cita.setFechaCita(citaDto.getFechaCita());
         cita.setMotivo(citaDto.getMotivo());
         cita.setEstado(citaDto.getEstado());
         cita.setNotas(citaDto.getNotas());
@@ -55,7 +54,7 @@ public class CitaService {
         Optional<Cita> optionalCita = citaRepository.findById(id);
         if (optionalCita.isPresent()) {
             Cita citaToUpdate = optionalCita.get();
-            citaToUpdate.setFecha_cita(citaDto.getFecha_cita());
+            citaToUpdate.setFechaCita(citaDto.getFechaCita());
             citaToUpdate.setMotivo(citaDto.getMotivo());
             citaToUpdate.setEstado(citaDto.getEstado());
             citaToUpdate.setNotas(citaDto.getNotas());
