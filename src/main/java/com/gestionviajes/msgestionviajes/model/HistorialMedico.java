@@ -1,10 +1,7 @@
 package com.gestionviajes.msgestionviajes.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
@@ -14,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "Historiales_Medicos")
+@Builder
 public class HistorialMedico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +32,7 @@ public class HistorialMedico {
 
     @Temporal(TemporalType.DATE)
     private Date fecha_creación = new Date();
+
+
 }
 

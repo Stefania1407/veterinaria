@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface DuenioRepository extends JpaRepository<Duenio, Integer> {
     Optional<Duenio> findByCorreoOrTeléfono(String correo, String teléfono);
+    Optional<Duenio> findByCorreo(String correo);
 }

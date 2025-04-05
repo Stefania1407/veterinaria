@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface VeterinarioRepository extends JpaRepository<Veterinario , Integer> {
     Optional<Veterinario> findByCorreo(String correo);
+    Optional<Veterinario> findById(Integer id);
 }

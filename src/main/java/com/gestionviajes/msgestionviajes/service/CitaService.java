@@ -1,7 +1,12 @@
 package com.gestionviajes.msgestionviajes.service;
 
+import com.gestionviajes.msgestionviajes.dto.CitaDto;
+import com.gestionviajes.msgestionviajes.exception.SaveCitaNotFoundException;
 import com.gestionviajes.msgestionviajes.model.Cita;
+import com.gestionviajes.msgestionviajes.model.Mascota;
 import com.gestionviajes.msgestionviajes.repository.CitaRepository;
+import com.gestionviajes.msgestionviajes.repository.MascotaRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,20 +18,59 @@ public class CitaService {
 
     @Autowired
     private CitaRepository citaRepository;
+    @Autowired
+    private MascotaRepository mascotaRepository;
 
-    public List<Cita> findAll() {
+    public List<Cita> findAllCitas() {
         return citaRepository.findAll();
     }
 
-    public Cita saveCita(Cita cita) {
-        return citaRepository.save(cita);
-    }
-
-    public Optional<Cita> findById(Integer id) {
+    public Optional<Cita> findCitaById(Integer id) {
         return citaRepository.findById(id);
     }
 
-    public void eliminarCita(Integer id) {
-        citaRepository.deleteById(id);
+    public Cita saveCita(CitaDto citaDto, Integer idMascota) {
+        Mascota mascota = mascotaRepository.findById(idMascota)
+                .orElseThrow(() -> new SaveCitaNotFoundException("Mascota no encontrada" + idMascota));
+
+        Optional<Cita> citaExistente = citaRepository.findByFechaCitaAndMascota(
+                citaDto.getFecha_cita(), mascota
+        );
+
+        if (citaExistente.isPresent()) {
+            throw new SaveCitaNotFoundException("Ya existe una cita para esta fecha y mascota");
+        }
+
+        Cita cita = new Cita();
+        cita.setFecha_cita(citaDto.getFecha_cita());
+        cita.setMotivo(citaDto.getMotivo());
+        cita.setEstado(citaDto.getEstado());
+        cita.setNotas(citaDto.getNotas());
+        cita.setMascota(mascota);
+
+        return citaRepository.save(cita);
+    }
+
+    public boolean updateCita(Integer id, CitaDto citaDto) {
+        Optional<Cita> optionalCita = citaRepository.findById(id);
+        if (optionalCita.isPresent()) {
+            Cita citaToUpdate = optionalCita.get();
+            citaToUpdate.setFecha_cita(citaDto.getFecha_cita());
+            citaToUpdate.setMotivo(citaDto.getMotivo());
+            citaToUpdate.setEstado(citaDto.getEstado());
+            citaToUpdate.setNotas(citaDto.getNotas());
+            citaRepository.save(citaToUpdate);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean deleteCita(Integer id) {
+        if (citaRepository.existsById(id)) {
+            citaRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

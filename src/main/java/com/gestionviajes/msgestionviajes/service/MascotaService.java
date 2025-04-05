@@ -1,5 +1,6 @@
 package com.gestionviajes.msgestionviajes.service;
 
+import com.gestionviajes.msgestionviajes.dto.MascotaDto;
 import com.gestionviajes.msgestionviajes.model.Mascota;
 import com.gestionviajes.msgestionviajes.repository.MascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,46 @@ public class MascotaService {
     @Autowired
     private MascotaRepository mascotaRepository;
 
-    public List<Mascota> findAll() {
+    public List<Mascota> findAllMascotas() {
         return mascotaRepository.findAll();
     }
 
-    public Mascota saveMascota(Mascota mascota) {
-        return mascotaRepository.save(mascota);
-    }
-
-    public Optional<Mascota> findById(Integer id) {
+    public Optional<Mascota> findMascotaById(Integer id) {
         return mascotaRepository.findById(id);
     }
 
-    public void eliminarMascota(Integer id) {
-        mascotaRepository.deleteById(id);
+    public Mascota createMascota(MascotaDto dto) {
+        Mascota mascota = new Mascota();
+        mascota.setNombre(dto.getNombre());
+        mascota.setEspecie(dto.getEspecie());
+        mascota.setRaza(dto.getRaza());
+        mascota.setFecha_nacimiento(dto.getFecha_nacimiento());
+        mascota.setGénero(dto.getGénero());
+        mascota.setNúmero_microchip(dto.getNúmero_microchip());
+        return mascotaRepository.save(mascota);
+    }
+
+    public boolean updateMascota(Integer id, MascotaDto dto) {
+        Optional<Mascota> mascotaOptional = mascotaRepository.findById(id);
+        if (mascotaOptional.isPresent()) {
+            Mascota mascota = mascotaOptional.get();
+            mascota.setNombre(dto.getNombre());
+            mascota.setEspecie(dto.getEspecie());
+            mascota.setRaza(dto.getRaza());
+            mascota.setFecha_nacimiento(dto.getFecha_nacimiento());
+            mascota.setGénero(dto.getGénero());
+            mascota.setNúmero_microchip(dto.getNúmero_microchip());
+            mascotaRepository.save(mascota);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteMascota(Integer id) {
+        if (mascotaRepository.existsById(id)) {
+            mascotaRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
