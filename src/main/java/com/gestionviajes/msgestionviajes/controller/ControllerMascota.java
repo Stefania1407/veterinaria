@@ -48,4 +48,3 @@ public class ControllerMascota {
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }
-

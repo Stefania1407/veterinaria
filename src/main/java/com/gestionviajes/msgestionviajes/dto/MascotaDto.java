@@ -10,6 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class MascotaDto {
+    private Integer idDueño;
     @NotBlank(message = "Nombre es obligatorio")
     private String nombre;
     @NotBlank(message = "Especie es obligatoria")
@@ -18,6 +19,4 @@ public class MascotaDto {
     private Date fecha_nacimiento;
     private String género;
     private String número_microchip;
-
-
 }

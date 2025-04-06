@@ -31,6 +31,4 @@ public class Mascota {
 
     @Temporal(TemporalType.DATE)
     private Date fecha_creación = new Date();
-
-
 }

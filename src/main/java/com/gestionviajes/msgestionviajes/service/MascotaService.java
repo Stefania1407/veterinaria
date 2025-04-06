@@ -14,6 +14,9 @@ public class MascotaService {
     @Autowired
     private MascotaRepository mascotaRepository;
 
+    @Autowired
+    private DuenioRepository duenioRepository;
+
     public List<Mascota> findAllMascotas() {
         return mascotaRepository.findAll();
     }
@@ -23,13 +26,20 @@ public class MascotaService {
     }
 
     public Mascota createMascota(MascotaDto dto) {
+        Optional<Duenio> duenioOptional = duenioRepository.findById(dto.getIdDueño());
+        if (duenioOptional.isEmpty()) {
+            throw new RuntimeException("Dueño no encontrado con id: " + dto.getIdDueño());
+        }
+
         Mascota mascota = new Mascota();
+        mascota.setDuenio(duenioOptional.get());
         mascota.setNombre(dto.getNombre());
         mascota.setEspecie(dto.getEspecie());
         mascota.setRaza(dto.getRaza());
         mascota.setFecha_nacimiento(dto.getFecha_nacimiento());
         mascota.setGénero(dto.getGénero());
         mascota.setNúmero_microchip(dto.getNúmero_microchip());
+
         return mascotaRepository.save(mascota);
     }
 

@@ -21,6 +21,9 @@ public class Duenio {
     private String teléfono;
     private String dirección;
 
+    @OneToMany(mappedBy = "duenio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mascota> mascotas = new ArrayList<>();
+
     @Temporal(TemporalType.DATE)
     private Date fecha_creación = new Date();
 

@@ -19,6 +19,4 @@ public class DuenioDto {
     @NotBlank(message = "Teléfono es obligatorio")
     private String teléfono;
     private String dirección;
-
-
 }
