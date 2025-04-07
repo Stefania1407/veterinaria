@@ -1,6 +1,7 @@
 package com.gestionviajes.msgestionviajes.controller;
 
 import com.gestionviajes.msgestionviajes.dto.MascotaDto;
+import com.gestionviajes.msgestionviajes.dto.MascotaResponseDto;
 import com.gestionviajes.msgestionviajes.model.Mascota;
 import com.gestionviajes.msgestionviajes.service.MascotaService;
 import jakarta.validation.Valid;
@@ -19,17 +20,21 @@ public class ControllerMascota {
     @Autowired
     private MascotaService mascotaService;
 
-    @GetMapping
-    public ResponseEntity<List<Mascota>> getAllMascotas() {
-        return ResponseEntity.ok(mascotaService.findAllMascotas());
-    }
+
 
     @GetMapping("/{id}")
-    public ResponseEntity<Mascota> getMascotaById(@PathVariable Integer id) {
+    public ResponseEntity<MascotaResponseDto> getMascotaById(@PathVariable Integer id) {
         return mascotaService.findMascotaById(id)
+                .map(mascotaService::convertToDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping
+    public ResponseEntity<List<MascotaResponseDto>> getAllMascotas() {
+        return ResponseEntity.ok(mascotaService.getAllMascotaDtos());
+    }
+
 
     @PostMapping
     public ResponseEntity<Mascota> createMascota(@Valid @RequestBody MascotaDto dto) {

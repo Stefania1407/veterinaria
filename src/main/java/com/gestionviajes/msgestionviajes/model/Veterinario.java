@@ -19,7 +19,7 @@ public class Veterinario {
     private String apellidos;
     private String especialización;
     private String correo;
-    private int telefono;
+    private long telefono;
 
     @Temporal(TemporalType.DATE)
     private Date fecha_creación = new Date();

@@ -1,7 +1,10 @@
 package com.gestionviajes.msgestionviajes.service;
 
 import com.gestionviajes.msgestionviajes.dto.MascotaDto;
+import com.gestionviajes.msgestionviajes.dto.MascotaResponseDto;
+import com.gestionviajes.msgestionviajes.model.Duenio;
 import com.gestionviajes.msgestionviajes.model.Mascota;
+import com.gestionviajes.msgestionviajes.repository.DuenioRepository;
 import com.gestionviajes.msgestionviajes.repository.MascotaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,14 @@ public class MascotaService {
     public Optional<Mascota> findMascotaById(Integer id) {
         return mascotaRepository.findById(id);
     }
+
+    public List<MascotaResponseDto> getAllMascotaDtos() {
+        return mascotaRepository.findAll()
+                .stream()
+                .map(this::convertToDto)
+                .toList();
+    }
+
 
     public Mascota createMascota(MascotaDto dto) {
         Optional<Duenio> duenioOptional = duenioRepository.findById(dto.getIdDueño());
@@ -65,5 +76,20 @@ public class MascotaService {
             return true;
         }
         return false;
+
+
     }
+
+    public MascotaResponseDto convertToDto(Mascota mascota) {
+        MascotaResponseDto dto = new MascotaResponseDto();
+        dto.setId(mascota.getId_mascota());
+        dto.setNombre(mascota.getNombre());
+        dto.setEspecie(mascota.getEspecie());
+        dto.setRaza(mascota.getRaza());
+        dto.setFecha_nacimiento(mascota.getFecha_nacimiento());
+        dto.setGénero(mascota.getGénero());
+        dto.setNúmero_microchip(mascota.getNúmero_microchip());
+        return dto;
+    }
+
 }

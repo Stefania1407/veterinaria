@@ -17,8 +17,7 @@ public class VeterinarioDto {
     @NotBlank(message = "Correo es obligatorio")
     @Email(message = "Debe ser un correo válido")
     private String correo;
-    @NotBlank(message = "Teléfono es obligatorio")
-    private int telefono;
+    private long telefono;
 
 
 }

@@ -1,6 +1,7 @@
 package com.gestionviajes.msgestionviajes.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,12 +11,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CitaDto {
-    @NotBlank(message = "La fecha de la cita es obligatoria")
+    @NotNull(message = "La fecha de la cita no puede ser nula")
     private LocalDateTime fechaCita;
-    @NotBlank(message = "Motivo es obligatorio")
+   private Integer idCita;
     private String motivo;
     private String estado = "Pendiente";
     private String notas;
+    private Integer idVeterinario;
+    private Integer idMascota;
 
 
 }

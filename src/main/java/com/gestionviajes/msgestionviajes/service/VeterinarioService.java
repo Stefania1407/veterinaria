@@ -34,6 +34,7 @@ public class VeterinarioService {
         Veterinario veterinario = new Veterinario();
         veterinario.setNombre(veterinarioDto.getNombre());
         veterinario.setApellidos(veterinarioDto.getApellidos());
+        veterinario.setEspecialización(veterinarioDto.getEspecialización());
         veterinario.setCorreo(veterinarioDto.getCorreo());
         veterinario.setTelefono(veterinarioDto.getTelefono());
 

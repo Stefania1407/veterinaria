@@ -4,6 +4,7 @@ import com.gestionviajes.msgestionviajes.dto.VeterinarioDto;
 import com.gestionviajes.msgestionviajes.model.Veterinario;
 import com.gestionviajes.msgestionviajes.service.VeterinarioService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
+@RestController
+@RequestMapping("api/veterinarios")
+@RequiredArgsConstructor
 
 public class ControllerVeterinario {
     @Autowired
@@ -33,9 +38,14 @@ public class ControllerVeterinario {
 
     @PostMapping
     public ResponseEntity<?> createVeterinario(@Valid @RequestBody VeterinarioDto veterinarioDto) {
-        Veterinario nuevoVeterinario = veterinarioService.saveVeterinario(veterinarioDto);
-        return ResponseEntity.ok(nuevoVeterinario);
+        try {
+            Veterinario nuevoVeterinario = veterinarioService.saveVeterinario(veterinarioDto);
+            return ResponseEntity.ok(nuevoVeterinario);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVeterinario(@PathVariable Integer id) {

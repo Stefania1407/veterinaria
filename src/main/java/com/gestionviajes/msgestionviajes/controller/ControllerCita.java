@@ -1,6 +1,7 @@
 package com.gestionviajes.msgestionviajes.controller;
 
 import com.gestionviajes.msgestionviajes.dto.CitaDto;
+import com.gestionviajes.msgestionviajes.dto.CitaResponseDto;
 import com.gestionviajes.msgestionviajes.model.Cita;
 import com.gestionviajes.msgestionviajes.service.CitaService;
 import jakarta.validation.Valid;
@@ -17,13 +18,15 @@ import java.util.List;
 public class ControllerCita {
 
     @Autowired
-    private  CitaService citaService;
+    private CitaService citaService;
 
+    // Obtener todas las citas
     @GetMapping
     public ResponseEntity<List<Cita>> getAllCitas() {
         return ResponseEntity.ok(citaService.findAllCitas());
     }
 
+    // Obtener cita por ID
     @GetMapping("/{id}")
     public ResponseEntity<Cita> getCitaById(@PathVariable Integer id) {
         return citaService.findCitaById(id)
@@ -31,16 +34,20 @@ public class ControllerCita {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    // Crear cita
     @PostMapping("/mascota/{idMascota}")
     public ResponseEntity<?> createCita(@PathVariable Integer idMascota, @Valid @RequestBody CitaDto citaDto) {
         try {
             Cita cita = citaService.saveCita(citaDto, idMascota);
-            return ResponseEntity.ok(cita);
+            CitaResponseDto response = citaService.mapToDto(cita); // llamas al mapper
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+
+    // Actualizar cita
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCita(@PathVariable Integer id, @Valid @RequestBody CitaDto citaDto) {
         try {
@@ -51,9 +58,11 @@ public class ControllerCita {
         }
     }
 
+    // Eliminar cita
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCita(@PathVariable Integer id) {
         boolean deleted = citaService.deleteCita(id);
         return deleted ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
+
 }
