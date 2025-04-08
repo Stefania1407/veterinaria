@@ -98,5 +98,10 @@ public class CitaService {
         return dto;
     }
 
+    public List<CitaResponseDto> getAllCitaDtos() {
+        return findAllCitas().stream()
+                .map(this::mapToDto)
+                .toList();
+    }
 
 }

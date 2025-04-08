@@ -20,19 +20,19 @@ public class ControllerCita {
     @Autowired
     private CitaService citaService;
 
-    // Obtener todas las citas
     @GetMapping
-    public ResponseEntity<List<Cita>> getAllCitas() {
-        return ResponseEntity.ok(citaService.findAllCitas());
+    public ResponseEntity<List<CitaResponseDto>> getAllCitas() {
+        return ResponseEntity.ok(citaService.getAllCitaDtos());
     }
 
-    // Obtener cita por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Cita> getCitaById(@PathVariable Integer id) {
+    public ResponseEntity<CitaResponseDto> getCitaById(@PathVariable Integer id) {
         return citaService.findCitaById(id)
+                .map(citaService::mapToDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
 
     // Crear cita
     @PostMapping("/mascota/{idMascota}")
