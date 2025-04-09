@@ -11,18 +11,32 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para la gestión de dueños (Duenio).
+ * Permite realizar operaciones CRUD sobre los dueños registrados.
+ */
 @RestController
 @RequestMapping("/api/duenios")
 public class ControllerDuenio {
 
+    // Inyección del servicio de dueños
     @Autowired
     private DuenioService duenioService;
 
+    /**
+     * Obtiene todos los dueños registrados.
+     * @return Lista de objetos Duenio.
+     */
     @GetMapping
     public ResponseEntity<List<Duenio>> getAll() {
         return ResponseEntity.ok(duenioService.findAll());
     }
 
+    /**
+     * Obtiene un dueño por su ID.
+     * @param id ID del dueño
+     * @return Objeto Duenio si se encuentra, o 404 si no existe.
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Duenio> getById(@PathVariable Integer id) {
         return duenioService.findById(id)
@@ -30,6 +44,11 @@ public class ControllerDuenio {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    /**
+     * Crea un nuevo dueño.
+     * @param dto Objeto DuenioDto con los datos del nuevo dueño.
+     * @return Dueño creado o mensaje de error.
+     */
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody DuenioDto dto) {
         try {
@@ -40,12 +59,23 @@ public class ControllerDuenio {
         }
     }
 
+    /**
+     * Actualiza un dueño existente.
+     * @param id ID del dueño a actualizar.
+     * @param dto Objeto DuenioDto con la nueva información.
+     * @return 200 OK si se actualiza, 404 si no se encuentra.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Integer id, @Valid @RequestBody DuenioDto dto) {
         boolean updated = duenioService.update(id, dto);
         return updated ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Elimina un dueño por su ID.
+     * @param id ID del dueño a eliminar.
+     * @return 200 OK si se elimina, 404 si no se encuentra.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         boolean deleted = duenioService.delete(id);

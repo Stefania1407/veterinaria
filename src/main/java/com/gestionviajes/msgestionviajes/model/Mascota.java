@@ -1,34 +1,72 @@
 package com.gestionviajes.msgestionviajes.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
-@Entity
-@Table(name = "Mascota")
+/**
+ * Entidad que representa el historial médico de una mascota.
+ * Contiene información relacionada a una cita específica, el diagnóstico, tratamiento,
+ * medicación, notas adicionales y la fecha en que se registró.
+ *
+ * Esta clase está mapeada a la tabla "Historiales_Medicos" en la base de datos.
+ */
 @Getter
 @Setter
-public class Mascota {
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "Historiales_Medicos")
+@Builder
+public class HistorialMedico {
+
+    /**
+     * Identificador único del historial médico.
+     * Se genera automáticamente con estrategia de incremento.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_mascota;
+    private Integer id_historial;
 
+    /**
+     * Cita médica asociada al historial.
+     * Relación uno a uno con la entidad Cita.
+     */
+    @OneToOne
+    @JoinColumn(name = "id_cita", nullable = false)
+    private Cita cita;
+
+    /**
+     * Mascota a la que pertenece el historial médico.
+     * Relación muchos a uno con la entidad Mascota.
+     */
     @ManyToOne
-    @JoinColumn(name = "id_dueño", nullable = false)
-    private Duenio duenio;
+    @JoinColumn(name = "id_mascota", nullable = false)
+    private Mascota mascota;
 
-    private String nombre;
-    private String especie;
-    private String raza;
+    /**
+     * Diagnóstico realizado durante la cita.
+     */
+    private String diagnóstico;
 
-    @Temporal(TemporalType.DATE)
-    private Date fecha_nacimiento;
+    /**
+     * Tratamiento indicado para la mascota.
+     */
+    private String tratamiento;
 
-    private String género;
-    private String número_microchip;
+    /**
+     * Medicación recetada en el historial médico.
+     */
+    private String medicación;
 
-    @Temporal(TemporalType.DATE)
-    private Date fecha_creación = new Date();
+    /**
+     * Notas adicionales agregadas por el veterinario.
+     */
+    private String notas;
+
+    /**
+     * Fecha en que fue creado el historial médico.
+     */
+    private Date fecha_creación;
 }

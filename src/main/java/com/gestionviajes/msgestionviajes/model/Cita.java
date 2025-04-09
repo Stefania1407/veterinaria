@@ -1,38 +1,53 @@
-package com.gestionviajes.msgestionviajes.model;
+package com.gestionviajes.msgestionviajes.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-
-@Entity
-@Table(name = "cita")
+/**
+ * DTO utilizado para crear o actualizar los datos de una mascota.
+ * Incluye validaciones para campos obligatorios y permite enviar información básica del animal.
+ */
 @Getter
 @Setter
-public class Cita {
+public class MascotaDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_cita;
+    /**
+     * ID del dueño de la mascota (relación con la entidad Dueño).
+     */
+    private Integer idDueño;
 
-    @ManyToOne
-    @JoinColumn(name = "id_mascota", nullable = false)
-    private Mascota mascota;
+    /**
+     * Nombre de la mascota. Campo obligatorio.
+     */
+    @NotBlank(message = "Nombre es obligatorio")
+    private String nombre;
 
-    @ManyToOne
-    @JoinColumn(name = "id_veterinario")
-    private Veterinario veterinario;
-    private LocalDateTime fechaCita;
+    /**
+     * Especie de la mascota (ej. perro, gato). Campo obligatorio.
+     */
+    @NotBlank(message = "Especie es obligatoria")
+    private String especie;
 
-    private String motivo;
-    private String estado = "Pendiente";
-    private String notas;
+    /**
+     * Raza de la mascota (opcional).
+     */
+    private String raza;
 
-    @Temporal(TemporalType.DATE)
-    private Date fecha_creación = new Date();
+    /**
+     * Fecha de nacimiento de la mascota (opcional).
+     */
+    private Date fecha_nacimiento;
 
+    /**
+     * Género de la mascota (opcional).
+     */
+    private String género;
 
+    /**
+     * Número de microchip, si la mascota tiene uno. Campo opcional.
+     */
+    private String número_microchip;
 }
