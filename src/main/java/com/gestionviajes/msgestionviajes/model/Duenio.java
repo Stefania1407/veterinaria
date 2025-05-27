@@ -54,7 +54,7 @@ public class Duenio {
      * Lista de mascotas asociadas a este dueño.
      * Relación uno a muchos.
      */
-    @OneToMany(mappedBy = "duenio", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Mascota> mascotas = new ArrayList<>();
 
     /**

@@ -17,7 +17,7 @@ public class MascotaDto {
     /**
      * ID del dueño al que pertenece la mascota.
      */
-    private Integer idDueño;
+    private Integer idDueno;
 
     /**
      * Nombre de la mascota. Campo obligatorio.
@@ -39,15 +39,15 @@ public class MascotaDto {
     /**
      * Fecha de nacimiento de la mascota.
      */
-    private Date fecha_nacimiento;
+    private Date fechaNacimiento;
 
     /**
-     * Género de la mascota (ej. macho, hembra).
+     * Genero de la mascota (ej. macho, hembra).
      */
-    private String género;
+    private String genero;
 
     /**
      * Número de microchip si tiene (opcional).
      */
-    private String número_microchip;
+    private String numeroMicrochip;
 }

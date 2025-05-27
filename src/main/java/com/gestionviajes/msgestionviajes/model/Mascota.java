@@ -1,72 +1,104 @@
 package com.gestionviajes.msgestionviajes.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Date;
 
-/**
- * Entidad que representa el historial médico de una mascota.
- * Contiene información relacionada a una cita específica, el diagnóstico, tratamiento,
- * medicación, notas adicionales y la fecha en que se registró.
- *
- * Esta clase está mapeada a la tabla "Historiales_Medicos" en la base de datos.
- */
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name = "Historiales_Medicos")
-@Builder
-public class HistorialMedico {
+@Table(name = "Mascota")
+public class Mascota {
 
-    /**
-     * Identificador único del historial médico.
-     * Se genera automáticamente con estrategia de incremento.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_historial;
+    private Integer idMascota;
 
-    /**
-     * Cita médica asociada al historial.
-     * Relación uno a uno con la entidad Cita.
-     */
-    @OneToOne
-    @JoinColumn(name = "id_cita", nullable = false)
-    private Cita cita;
-
-    /**
-     * Mascota a la que pertenece el historial médico.
-     * Relación muchos a uno con la entidad Mascota.
-     */
     @ManyToOne
-    @JoinColumn(name = "id_mascota", nullable = false)
-    private Mascota mascota;
+    @JoinColumn(name = "id_dueno", nullable = false)
+    private Duenio dueno;
 
-    /**
-     * Diagnóstico realizado durante la cita.
-     */
-    private String diagnóstico;
+    private String nombre;
+    private String especie;
+    private String raza;
 
-    /**
-     * Tratamiento indicado para la mascota.
-     */
-    private String tratamiento;
+    @Temporal(TemporalType.DATE)
+    private Date fechaNacimiento;
 
-    /**
-     * Medicación recetada en el historial médico.
-     */
-    private String medicación;
+    private String genero;
+    private String numeroMicrochip;
 
-    /**
-     * Notas adicionales agregadas por el veterinario.
-     */
-    private String notas;
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion = new Date();
 
-    /**
-     * Fecha en que fue creado el historial médico.
-     */
-    private Date fecha_creación;
+    // Getters y setters
+
+    public Integer getIdMascota() {
+        return idMascota;
+    }
+
+    public void setIdMascota(Integer idMascota) {
+        this.idMascota = idMascota;
+    }
+
+    public Duenio getDueno() {
+        return dueno;
+    }
+
+    public void setDueno(Duenio dueno) {
+        this.dueno = dueno;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
+
+    public String getNumeroMicrochip() {
+        return numeroMicrochip;
+    }
+
+    public void setNumeroMicrochip(String numeroMicrochip) {
+        this.numeroMicrochip = numeroMicrochip;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 }

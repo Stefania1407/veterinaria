@@ -40,5 +40,5 @@ public class VeterinarioDto {
     /**
      * Número telefónico del veterinario.
      */
-    private long telefono;
+    private Long telefono;
 }

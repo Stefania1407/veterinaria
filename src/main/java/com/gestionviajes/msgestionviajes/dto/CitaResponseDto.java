@@ -1,9 +1,10 @@
 package com.gestionviajes.msgestionviajes.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * DTO de respuesta para retornar información de una cita al cliente.
@@ -21,7 +22,8 @@ public class CitaResponseDto {
     /**
      * Fecha y hora de la cita.
      */
-    private LocalDateTime fechaCita;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/Bogota")
+    private Date fechaCita;
 
     /**
      * Motivo de la cita (ej. revisión, vacunación).

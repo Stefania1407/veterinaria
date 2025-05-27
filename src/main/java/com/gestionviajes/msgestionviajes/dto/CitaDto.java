@@ -1,11 +1,11 @@
 package com.gestionviajes.msgestionviajes.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * DTO (Data Transfer Object) para representar una cita médica veterinaria.
@@ -17,23 +17,25 @@ public class CitaDto {
 
     /**
      * Fecha y hora programada para la cita.
-     * No puede ser nula.
+     * Se debe usar el mismo tipo que en la entidad (java.util.Date).
+     * El formato JSON asegura compatibilidad al recibir la fecha desde el frontend.
      */
     @NotNull(message = "La fecha de la cita no puede ser nula")
-    private LocalDateTime fechaCita;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "America/Bogota")
+    private Date fechaCita;
 
     /**
-     * Identificador de la cita (opcional en creación).
+     * Identificador de la cita (puede ser nulo al crear una nueva).
      */
     private Integer idCita;
 
     /**
-     * Motivo de la cita (consulta, chequeo, etc.).
+     * Motivo de la cita (consulta, chequeo, urgencia, etc.).
      */
     private String motivo;
 
     /**
-     * Estado de la cita. Por defecto es "Pendiente".
+     * Estado actual de la cita. Por defecto es "Pendiente".
      */
     private String estado = "Pendiente";
 

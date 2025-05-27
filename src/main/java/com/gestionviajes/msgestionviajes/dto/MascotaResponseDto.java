@@ -36,15 +36,15 @@ public class MascotaResponseDto {
     /**
      * Fecha de nacimiento de la mascota.
      */
-    private Date fecha_nacimiento;
+    private Date fechaNacimiento;
 
     /**
-     * Género de la mascota (ej. macho, hembra).
+     * Genero de la mascota (ej. macho, hembra).
      */
-    private String género;
+    private String genero;
 
     /**
      * Número de microchip de la mascota (si aplica).
      */
-    private String número_microchip;
+    private String numeroMicrochip;
 }

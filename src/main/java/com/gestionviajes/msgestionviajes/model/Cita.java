@@ -1,53 +1,129 @@
-package com.gestionviajes.msgestionviajes.dto;
+package com.gestionviajes.msgestionviajes.model;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
-
+import jakarta.persistence.*;
 import java.util.Date;
 
 /**
- * DTO utilizado para crear o actualizar los datos de una mascota.
- * Incluye validaciones para campos obligatorios y permite enviar información básica del animal.
+ * Representa una cita médica para una mascota dentro del sistema veterinario.
+ * Contiene información sobre la mascota, el veterinario, fecha, motivo y estado de la cita.
  */
-@Getter
-@Setter
-public class MascotaDto {
+@Entity
+@Table(name = "Cita")
+public class Cita {
 
     /**
-     * ID del dueño de la mascota (relación con la entidad Dueño).
+     * Identificador único de la cita (clave primaria).
      */
-    private Integer idDueño;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id_cita;
 
     /**
-     * Nombre de la mascota. Campo obligatorio.
+     * Mascota relacionada con la cita. Relación muchos-a-uno.
      */
-    @NotBlank(message = "Nombre es obligatorio")
-    private String nombre;
+    @ManyToOne
+    @JoinColumn(name = "id_mascota", nullable = false)
+    private Mascota mascota;
 
     /**
-     * Especie de la mascota (ej. perro, gato). Campo obligatorio.
+     * Veterinario asignado a la cita. Puede ser null si aún no está definido.
      */
-    @NotBlank(message = "Especie es obligatoria")
-    private String especie;
+    @ManyToOne
+    @JoinColumn(name = "id_veterinario")
+    private Veterinario veterinario;
 
     /**
-     * Raza de la mascota (opcional).
+     * Fecha programada de la cita (no confundir con fecha de creación).
      */
-    private String raza;
+    @Temporal(TemporalType.DATE)
+    private Date fechaCita;
 
     /**
-     * Fecha de nacimiento de la mascota (opcional).
+     * Fecha y hora en que se creó el registro de la cita.
+     * No se debe actualizar una vez creada.
      */
-    private Date fecha_nacimiento;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(updatable = false)
+    private Date fechaCreacion = new Date();
 
     /**
-     * Género de la mascota (opcional).
+     * Motivo de la cita (vacunación, revisión, etc.).
      */
-    private String género;
+    private String motivo;
 
     /**
-     * Número de microchip, si la mascota tiene uno. Campo opcional.
+     * Estado actual de la cita (Pendiente, Confirmada, Cancelada, etc.).
      */
-    private String número_microchip;
+    private String estado = "Pendiente";
+
+    /**
+     * Notas adicionales proporcionadas por el usuario o el veterinario.
+     */
+    private String notas;
+
+    // ====== GETTERS Y SETTERS ======
+
+    public Integer getId_cita() {
+        return id_cita;
+    }
+
+    public void setId_cita(Integer id_cita) {
+        this.id_cita = id_cita;
+    }
+
+    public Mascota getMascota() {
+        return mascota;
+    }
+
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+    }
+
+    public Veterinario getVeterinario() {
+        return veterinario;
+    }
+
+    public void setVeterinario(Veterinario veterinario) {
+        this.veterinario = veterinario;
+    }
+
+    public Date getFechaCita() {
+        return fechaCita;
+    }
+
+    public void setFechaCita(Date fechaCita) {
+        this.fechaCita = fechaCita;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getNotas() {
+        return notas;
+    }
+
+    public void setNotas(String notas) {
+        this.notas = notas;
+    }
 }
